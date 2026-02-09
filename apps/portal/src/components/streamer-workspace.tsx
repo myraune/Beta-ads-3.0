@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { DEFAULT_STREAMER_WORKSPACE_DATA, getWorkspaceCampaignById } from "@/lib/streamer-mock";
 import { useStreamerFlowState } from "@/lib/streamer-flow-store";
+import { BrandLogo } from "@/components/brand-logo";
 import { StreamerLeftNav } from "@/components/streamer-left-nav";
 import { StreamerRightRail } from "@/components/streamer-right-rail";
 import { StreamerSections } from "@/components/streamer-sections";
@@ -300,6 +301,12 @@ export function StreamerWorkspace(props: StreamerWorkspaceProps) {
         <header className="mb-4 rounded-2xl border border-white/10 bg-black/30 p-4">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
+              <div className="mb-3 flex items-center gap-3">
+                <span className="streamer-brand-mark-shell inline-flex items-center justify-center rounded-xl border border-cyan-300/30 bg-cyan-500/10 p-1.5">
+                  <BrandLogo kind="mark" surface="dark" size="sm" className="streamer-brand-logo streamer-brand-logo--mark" />
+                </span>
+                <BrandLogo kind="horizontal" surface="dark" size="sm" className="streamer-brand-logo streamer-brand-logo--horizontal" />
+              </div>
               <p className="inline-flex rounded-full border border-cyan-300/35 bg-cyan-500/10 px-3 py-1 text-xs uppercase tracking-[0.24em] text-cyan-100">
                 Streamer workspace
               </p>

@@ -75,16 +75,16 @@ export function StreamerObsSetup() {
             <p className="streamer-surface-chip inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em]">
               Streaming code
             </p>
-            <h1 className="mt-3 font-[family-name:var(--font-heading)] text-5xl font-semibold tracking-tight text-ink">OBS setup</h1>
-            <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink/75">
+            <h1 className="mt-3 font-[family-name:var(--font-heading)] text-5xl font-semibold tracking-tight text-slate-50">OBS setup</h1>
+            <p className="mt-3 max-w-2xl text-base leading-relaxed text-slate-300">
               Configure one browser source and keep it enabled across scenes. After setup, run the test animation to verify visibility.
             </p>
           </div>
 
           <div className="grid gap-3">
             <article className="streamer-outline-card rounded-2xl p-4">
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Display test animation</p>
-              <p className="mt-2 text-sm leading-relaxed text-slate-700">
+              <p className="text-xs uppercase tracking-[0.2em] text-cyan-300">Display test animation</p>
+              <p className="mt-2 text-sm leading-relaxed text-slate-300">
                 Open OBS, then run the test animation and confirm it appears in every live scene.
               </p>
               <button
@@ -98,25 +98,25 @@ export function StreamerObsSetup() {
               </button>
               <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
                 Status:{" "}
-                <span className="text-slate-700" data-testid="obs-test-status">
+                <span className="text-cyan-200" data-testid="obs-test-status">
                   {testStatus}
                 </span>
               </p>
             </article>
 
             <article className="streamer-outline-card rounded-2xl p-4">
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Connection status</p>
-              <p className="mt-2 text-sm text-slate-700">Link in streaming software:</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-cyan-300">Connection status</p>
+              <p className="mt-2 text-sm text-slate-300">Link in streaming software:</p>
               <span
                 data-testid="obs-connection-status"
                 className={`mt-2 inline-flex rounded-full px-2 py-1 text-xs font-semibold uppercase tracking-wide ${
-                  state.overlayConnected ? "bg-emerald-100 text-emerald-700" : "bg-rose-100 text-rose-700"
+                  state.overlayConnected ? "bg-emerald-500/20 text-emerald-200" : "bg-rose-500/20 text-rose-200"
                 }`}
               >
                 {state.overlayConnected ? "active" : "inactive"}
               </span>
               {state.lastTestRunAt ? (
-                <p className="mt-2 text-xs text-slate-500">Last test: {new Date(state.lastTestRunAt).toLocaleString("en-US", { timeZone: "UTC" })} UTC</p>
+                <p className="mt-2 text-xs text-slate-400">Last test: {new Date(state.lastTestRunAt).toLocaleString("en-US", { timeZone: "UTC" })} UTC</p>
               ) : null}
             </article>
           </div>
@@ -124,7 +124,7 @@ export function StreamerObsSetup() {
       </section>
 
       {!state.providerConnected ? (
-        <div className="rounded-2xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-800 shadow-sm">
+        <div className="rounded-2xl border border-amber-300/35 bg-amber-500/10 px-4 py-3 text-sm text-amber-200 shadow-sm">
           Connect Twitch before running setup actions.
           <Link href="/streamer/login" className="ml-2 font-semibold underline">
             Go to login
@@ -133,7 +133,7 @@ export function StreamerObsSetup() {
       ) : null}
 
       <section className="streamer-surface-card rounded-3xl p-6">
-        <div className="flex flex-wrap gap-2 border-b border-slate-200 pb-3">
+        <div className="flex flex-wrap gap-2 border-b border-slate-700/60 pb-3">
           {STREAMER_SETUP_GUIDE_TABS.map((tab) => (
             <button
               key={tab.id}
@@ -151,43 +151,43 @@ export function StreamerObsSetup() {
 
         <div className="mt-5 grid gap-4 xl:grid-cols-[minmax(0,1fr)_340px]">
           <article>
-            <h2 className="font-[family-name:var(--font-heading)] text-3xl font-semibold tracking-tight text-ink">{selectedTab.title}</h2>
-            <p className="mt-2 text-sm leading-relaxed text-ink/75">{selectedTab.intro}</p>
+            <h2 className="font-[family-name:var(--font-heading)] text-3xl font-semibold tracking-tight text-slate-50">{selectedTab.title}</h2>
+            <p className="mt-2 text-sm leading-relaxed text-slate-300">{selectedTab.intro}</p>
             <ul className="mt-4 space-y-2">
               {selectedTab.steps.map((step) => (
-                <li key={step} className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700">
+                <li key={step} className="rounded-xl border border-slate-700 bg-slate-950/55 px-3 py-2 text-sm text-slate-200">
                   {step}
                 </li>
               ))}
             </ul>
             {selectedTab.note ? (
-              <p className="mt-3 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">{selectedTab.note}</p>
+              <p className="mt-3 rounded-xl border border-amber-300/35 bg-amber-500/10 px-3 py-2 text-xs text-amber-200">{selectedTab.note}</p>
             ) : null}
           </article>
 
-          <article className="rounded-2xl border border-cyan-200 bg-cyan-50 p-4">
-            <p className="text-xs uppercase tracking-[0.2em] text-cyan-700">Source snippet</p>
-            <p className="mt-2 text-xs leading-relaxed text-cyan-900">{STREAMER_SOURCE_SNIPPET}</p>
+          <article className="rounded-2xl border border-cyan-300/30 bg-cyan-500/10 p-4">
+            <p className="text-xs uppercase tracking-[0.2em] text-cyan-200">Source snippet</p>
+            <p className="mt-2 text-xs leading-relaxed text-cyan-100">{STREAMER_SOURCE_SNIPPET}</p>
             <button
               type="button"
               onClick={copySnippet}
-              className="mt-3 w-full rounded-lg border border-cyan-300 bg-white px-3 py-2 text-sm font-semibold text-cyan-700 transition hover:border-cyan-400"
+              className="mt-3 w-full rounded-lg border border-cyan-300/50 bg-slate-950/70 px-3 py-2 text-sm font-semibold text-cyan-100 transition hover:border-cyan-300"
               aria-label="Copy source snippet"
             >
               Copy snippet
             </button>
-            {copyStatus === "copied" ? <p className="mt-2 text-xs text-emerald-700">Snippet copied.</p> : null}
-            {copyStatus === "unavailable" ? <p className="mt-2 text-xs text-amber-700">Clipboard not available.</p> : null}
+            {copyStatus === "copied" ? <p className="mt-2 text-xs text-emerald-200">Snippet copied.</p> : null}
+            {copyStatus === "unavailable" ? <p className="mt-2 text-xs text-amber-200">Clipboard not available.</p> : null}
 
-            <div className="mt-5 rounded-xl border border-dashed border-cyan-300 bg-white/70 p-4 text-center">
-              <p className="text-xs uppercase tracking-[0.2em] text-cyan-700">Drag and drop simulator</p>
-              <p className="mt-2 text-sm text-cyan-900">Drop the snippet into OBS to auto-create browser source settings.</p>
+            <div className="mt-5 rounded-xl border border-dashed border-cyan-300/40 bg-slate-950/35 p-4 text-center">
+              <p className="text-xs uppercase tracking-[0.2em] text-cyan-200">Drag and drop simulator</p>
+              <p className="mt-2 text-sm text-cyan-100">Drop the snippet into OBS to auto-create browser source settings.</p>
             </div>
           </article>
         </div>
 
         <div className="mt-5 flex flex-wrap gap-2">
-          <Link href="/streamer" className="streamer-ghost-btn rounded-lg px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-400">
+          <Link href="/streamer" className="streamer-ghost-btn rounded-lg px-4 py-2 text-sm font-semibold text-slate-100 transition hover:border-cyan-300/60">
             Back to sponsorships
           </Link>
           <Link href="/streamer/workspace" className="streamer-primary-btn rounded-lg px-4 py-2 text-sm font-semibold text-white transition">

@@ -12,6 +12,8 @@ describe("StreamerLoginScreen", () => {
   it("renders Twitch login and disabled YouTube and Kick buttons", () => {
     render(<StreamerLoginScreen />);
 
+    expect(screen.getByAltText("Beta Ads logo")).toBeInTheDocument();
+    expect(screen.getByAltText("Beta Ads mark")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Login with Twitch" })).toBeEnabled();
     expect(screen.getByRole("button", { name: "Login with YouTube" })).toBeDisabled();
     expect(screen.getByRole("button", { name: "Login with Kick" })).toBeDisabled();
