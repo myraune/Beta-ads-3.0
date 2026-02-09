@@ -1,5 +1,5 @@
-import { StreamerWorkspace } from "@/components/streamer-workspace";
+import { StreamerSponsorshipHub } from "@/components/streamer-sponsorship-hub";
 
 export default function StreamerPortalPage() {
-  return <StreamerWorkspace />;
+  return <StreamerSponsorshipHub />;
 }

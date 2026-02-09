@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { StreamerSectionsProps } from "@/types/streamer";
 
 function SectionCard(props: { children: React.ReactNode; className?: string }) {
@@ -15,6 +16,25 @@ function StatTile(props: { label: string; value: string | number; tone?: "defaul
 
 export function StreamerSections(props: StreamerSectionsProps) {
   const selectedSlot = props.data.configuration.slots.find((slot) => slot.id === props.uiState.selectedOverlaySlot);
+  const [chatDestinationUrl, setChatDestinationUrl] = useState(props.data.requirements.banner.destinationUrl);
+  const [copyStatus, setCopyStatus] = useState<"idle" | "copied" | "unavailable">("idle");
+  const completedRequirementIds = new Set(props.uiState.completedRequirementIds);
+  const completedRequirementCount = props.uiState.completedRequirementIds.length;
+  const totalRequirements = props.data.requirements.items.length;
+
+  const onCopyGeneratedLink = async () => {
+    if (!props.uiState.generatedChatLink) {
+      return;
+    }
+
+    if (typeof navigator === "undefined" || !navigator.clipboard) {
+      setCopyStatus("unavailable");
+      return;
+    }
+
+    await navigator.clipboard.writeText(props.uiState.generatedChatLink);
+    setCopyStatus("copied");
+  };
 
   if (props.uiState.activeSection === "general") {
     return (
@@ -90,15 +110,53 @@ export function StreamerSections(props: StreamerSectionsProps) {
   if (props.uiState.activeSection === "requirements") {
     return (
       <section className="space-y-4" data-testid="streamer-section-requirements">
-        {props.data.requirements.items.map((item) => (
-          <SectionCard key={item.id}>
-            <span className="inline-flex rounded-md border border-blue-300/30 bg-blue-500/15 px-2 py-1 text-xs font-semibold uppercase tracking-wide text-blue-100">
-              {item.statusLabel}
-            </span>
-            <h3 className="mt-3 text-2xl font-semibold text-white">{item.title}</h3>
-            <p className="mt-2 text-base text-slate-200">{item.description}</p>
-          </SectionCard>
-        ))}
+        <SectionCard>
+          <p className="text-xs uppercase tracking-[0.24em] text-[var(--streamer-muted)]">Requirement progress</p>
+          <p className="mt-2 text-2xl font-semibold text-white">
+            {completedRequirementCount}/{totalRequirements} completed
+          </p>
+          <div className="mt-3 h-2 rounded-full bg-slate-900/70">
+            <div
+              className="h-2 rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400 transition-all"
+              style={{ width: `${totalRequirements === 0 ? 0 : (completedRequirementCount / totalRequirements) * 100}%` }}
+            />
+          </div>
+        </SectionCard>
+
+        {props.data.requirements.items.map((item) => {
+          const isCompleted = completedRequirementIds.has(item.id);
+
+          return (
+            <SectionCard key={item.id}>
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <span
+                  className={`inline-flex rounded-md border px-2 py-1 text-xs font-semibold uppercase tracking-wide ${
+                    isCompleted
+                      ? "border-emerald-300/35 bg-emerald-500/15 text-emerald-100"
+                      : "border-blue-300/30 bg-blue-500/15 text-blue-100"
+                  }`}
+                >
+                  {isCompleted ? "completed" : item.statusLabel}
+                </span>
+                <button
+                  type="button"
+                  className={`rounded-lg border px-3 py-1.5 text-xs font-semibold transition disabled:cursor-not-allowed disabled:opacity-60 ${
+                    isCompleted
+                      ? "border-emerald-300/40 bg-emerald-500/10 text-emerald-100"
+                      : "border-white/20 bg-slate-950/35 text-slate-100"
+                  }`}
+                  onClick={() => props.onToggleRequirementItem(item.id)}
+                  disabled={!props.uiState.joined}
+                  aria-label={`Toggle requirement ${item.id}`}
+                >
+                  {isCompleted ? "Mark pending" : "Mark complete"}
+                </button>
+              </div>
+              <h3 className="mt-3 text-2xl font-semibold text-white">{item.title}</h3>
+              <p className="mt-2 text-base text-slate-200">{item.description}</p>
+            </SectionCard>
+          );
+        })}
 
         <SectionCard>
           <h3 className="text-2xl font-semibold text-white">{props.data.requirements.banner.title}</h3>
@@ -155,6 +213,11 @@ export function StreamerSections(props: StreamerSectionsProps) {
         <div className="rounded-xl border border-emerald-300/35 bg-emerald-950/40 px-4 py-3 text-sm font-medium text-emerald-100">
           {props.data.streamContent.activationNotice}
         </div>
+        {!props.setupCompleted ? (
+          <div className="rounded-xl border border-amber-300/35 bg-amber-500/10 px-4 py-3 text-sm text-amber-100">
+            OBS setup is not completed yet. Visit setup to enable overlay tests and activate stable delivery.
+          </div>
+        ) : null}
 
         <SectionCard>
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--streamer-muted)]">Message</p>
@@ -169,6 +232,52 @@ export function StreamerSections(props: StreamerSectionsProps) {
           <div className="mt-3 border-l-2 border-cyan-300 bg-white/[0.03] px-4 py-3">
             <p className="text-xl font-semibold text-white">{props.data.streamContent.commandTitle}</p>
             <p className="mt-2 text-base leading-relaxed text-slate-200">{props.data.streamContent.commandBody}</p>
+          </div>
+        </SectionCard>
+
+        <SectionCard>
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--streamer-muted)]">Chat CTA shortlink</p>
+          <div className="mt-3 space-y-3">
+            <label className="text-xs uppercase tracking-[0.18em] text-[var(--streamer-muted)]" htmlFor="chat-destination-url">
+              Destination URL
+            </label>
+            <input
+              id="chat-destination-url"
+              type="url"
+              value={chatDestinationUrl}
+              onChange={(event) => setChatDestinationUrl(event.target.value)}
+              className="w-full rounded-lg border border-white/20 bg-black/30 px-3 py-2 text-sm text-white outline-none transition focus:border-cyan-300/70"
+            />
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setCopyStatus("idle");
+                  props.onGenerateChatLink(chatDestinationUrl);
+                }}
+                className="rounded-lg border border-cyan-300/35 bg-cyan-500/15 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-cyan-100 transition hover:border-cyan-300/70"
+                aria-label="Generate chat cta link"
+              >
+                Generate tracked link
+              </button>
+              <button
+                type="button"
+                onClick={onCopyGeneratedLink}
+                className="rounded-lg border border-white/20 bg-slate-950/40 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-100 transition hover:border-white/40 disabled:opacity-50"
+                disabled={!props.uiState.generatedChatLink}
+                aria-label="Copy generated chat link"
+              >
+                Copy link
+              </button>
+              {copyStatus === "copied" ? <span className="text-xs text-emerald-300">Copied</span> : null}
+              {copyStatus === "unavailable" ? <span className="text-xs text-amber-200">Clipboard not available</span> : null}
+            </div>
+            <div className="streamer-card-soft rounded-lg p-3">
+              <p className="text-xs uppercase tracking-[0.18em] text-[var(--streamer-muted)]">Generated link</p>
+              <p className="mt-2 break-all text-sm text-slate-200" data-testid="generated-chat-link">
+                {props.uiState.generatedChatLink ?? "No link generated yet."}
+              </p>
+            </div>
           </div>
         </SectionCard>
 
@@ -192,10 +301,12 @@ export function StreamerSections(props: StreamerSectionsProps) {
                 className="rounded-xl border border-white/20 bg-slate-950/45 px-5 py-3 text-sm font-semibold text-slate-100 transition hover:border-white/40 disabled:cursor-not-allowed disabled:opacity-60"
                 onClick={props.onToggleOverlay}
                 aria-label="Toggle overlay from stream content section"
-                disabled={!props.uiState.joined}
+                disabled={!props.uiState.joined || !props.setupCompleted}
               >
                 {!props.uiState.joined
                   ? "Join campaign to test overlay"
+                  : !props.setupCompleted
+                    ? "Complete setup to test overlay"
                   : props.uiState.overlayConnected
                     ? "Disconnect overlay"
                     : "Test on overlay"}

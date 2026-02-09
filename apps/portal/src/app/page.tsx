@@ -8,7 +8,7 @@ const portals = [
     cta: "Open Agency"
   },
   {
-    href: "/streamer",
+    href: "/streamer/login",
     title: "Streamer Workspace",
     summary: "Campaign brief, requirements, and overlay controls with real-time status.",
     cta: "Open Streamer"

@@ -2,6 +2,20 @@ export type StreamerSection = "general" | "brief" | "requirements" | "stream-con
 
 export type WorkflowStepStatus = "pending" | "active" | "complete";
 
+export type ConnectProvider = "twitch" | "youtube" | "kick";
+
+export type SponsorshipTab = "my" | "available";
+
+export interface StreamerFlowState {
+  providerConnected: boolean;
+  connectedProvider: ConnectProvider | null;
+  setupCompleted: boolean;
+  overlayConnected: boolean;
+  joinedCampaignIds: string[];
+  selectedCampaignId: string | null;
+  lastTestRunAt: string | null;
+}
+
 export interface CampaignRequirement {
   id: string;
   title: string;
@@ -9,9 +23,41 @@ export interface CampaignRequirement {
   statusLabel: string;
 }
 
+export interface SponsorshipCard {
+  id: string;
+  campaignId: string;
+  campaignSlug: string;
+  title: string;
+  brand: string;
+  description: string;
+  status: "active" | "scheduled" | "finished";
+  payoutLabel: string;
+  imageUrl: string;
+  imageAlt: string;
+}
+
+export interface SetupGuideTab {
+  id: "drag-drop" | "video" | "text" | "mobile";
+  label: string;
+  title: string;
+  intro: string;
+  steps: string[];
+  note?: string;
+}
+
+export interface StreamerShellNavItem {
+  id: "sponsorships" | "clips" | "wallet" | "statistics" | "help";
+  label: string;
+  href?: string;
+  comingSoon?: boolean;
+}
+
 export interface CampaignWorkspaceData {
   campaignId: string;
+  campaignSlug: string;
   campaignTitle: string;
+  isFeatured: boolean;
+  requiresSetup: boolean;
   advertiser: string;
   summary: string;
   timeframe: {
@@ -68,8 +114,11 @@ export interface StreamerUiState {
   joined: boolean;
   overlayConnected: boolean;
   requirementsCompleted: boolean;
+  completedRequirementIds: string[];
+  liveMinutes: number;
   activeSection: StreamerSection;
   selectedOverlaySlot: number;
+  generatedChatLink: string | null;
   isPaused: boolean;
 }
 
@@ -80,8 +129,16 @@ export interface WorkflowStep {
   status: WorkflowStepStatus;
 }
 
+export interface ProofTimelineEvent {
+  id: string;
+  ts: string;
+  title: string;
+  detail: string;
+}
+
 export interface StreamerWorkspaceProps {
   data?: CampaignWorkspaceData;
+  campaignId?: string;
 }
 
 export interface StreamerLeftNavProps {
@@ -93,8 +150,11 @@ export interface StreamerLeftNavProps {
 
 export interface StreamerRightRailProps {
   uiState: StreamerUiState;
+  flowState?: StreamerFlowState;
   workflowSteps: WorkflowStep[];
+  activityLog: ProofTimelineEvent[];
   onPrimaryAction: () => void;
+  onSimulateLiveProgress: () => void;
   onToggleOverlay: () => void;
   onToggleRequirements: () => void;
 }
@@ -102,6 +162,9 @@ export interface StreamerRightRailProps {
 export interface StreamerSectionsProps {
   data: CampaignWorkspaceData;
   uiState: StreamerUiState;
+  setupCompleted: boolean;
+  onToggleRequirementItem: (itemId: string) => void;
+  onGenerateChatLink: (destinationUrl: string) => void;
   onToggleOverlay: () => void;
   onToggleRequirements: () => void;
   onSelectOverlaySlot: (slotId: number) => void;

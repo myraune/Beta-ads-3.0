@@ -32,14 +32,26 @@ function statusBadge(active: boolean, text: string, activeClasses: string, inact
   );
 }
 
+function formatUtcClock(iso: string): string {
+  return new Date(iso).toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+    timeZone: "UTC"
+  });
+}
+
 export function StreamerRightRail(props: StreamerRightRailProps) {
-  const primaryLabel = !props.uiState.joined ? "Join" : props.uiState.isPaused ? "Resume" : "Pause";
+  const overlayConnected = props.flowState?.overlayConnected ?? props.uiState.overlayConnected;
+  const primaryLabel = !props.uiState.joined ? "Join in sponsorships" : props.uiState.isPaused ? "Resume" : "Pause";
+  const warmupProgress = Math.min(100, Math.round((props.uiState.liveMinutes / 20) * 100));
 
   return (
     <aside className="streamer-card order-3 rounded-2xl p-4 xl:order-none" data-testid="streamer-right-rail">
       <button
         type="button"
-        className="w-full rounded-xl bg-gradient-to-r from-blue-500 via-blue-500 to-cyan-400 px-4 py-3 text-base font-semibold text-white shadow-[0_12px_30px_rgba(59,130,246,0.35)] transition hover:brightness-110"
+        className="streamer-primary-btn w-full rounded-xl px-4 py-3 text-base font-semibold text-white transition"
         onClick={props.onPrimaryAction}
       >
         {primaryLabel}
@@ -77,10 +89,10 @@ export function StreamerRightRail(props: StreamerRightRailProps) {
             <span
               data-testid="overlay-status-badge"
               className={`rounded-full px-2 py-1 text-xs font-semibold uppercase tracking-wide ${
-                props.uiState.overlayConnected ? "bg-emerald-500/20 text-emerald-200" : "bg-rose-500/20 text-rose-200"
+                overlayConnected ? "bg-emerald-500/20 text-emerald-200" : "bg-rose-500/20 text-rose-200"
               }`}
             >
-              {props.uiState.overlayConnected ? "connected" : "not connected"}
+              {overlayConnected ? "connected" : "not connected"}
             </span>
           </div>
 
@@ -94,6 +106,18 @@ export function StreamerRightRail(props: StreamerRightRailProps) {
             >
               {props.uiState.requirementsCompleted ? "completed" : "pending"}
             </span>
+          </div>
+
+          <div className="rounded-lg border border-white/10 bg-slate-950/55 px-3 py-2">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-slate-300">Live warmup</span>
+              <span className="text-xs font-semibold text-slate-200" data-testid="live-progress-value">
+                {props.uiState.liveMinutes}/20m
+              </span>
+            </div>
+            <div className="mt-2 h-1.5 rounded-full bg-slate-900/70">
+              <div className="h-1.5 rounded-full bg-gradient-to-r from-cyan-400 to-blue-400 transition-all" style={{ width: `${warmupProgress}%` }} />
+            </div>
           </div>
         </div>
 
@@ -117,6 +141,31 @@ export function StreamerRightRail(props: StreamerRightRailProps) {
             Toggle requirements
           </button>
         </div>
+
+          <button
+            type="button"
+            className="mt-2 w-full rounded-lg border border-cyan-300/35 bg-cyan-500/10 px-2 py-2 text-xs font-medium uppercase tracking-wide text-cyan-100 transition hover:border-cyan-300/70 disabled:cursor-not-allowed disabled:opacity-60"
+            onClick={props.onSimulateLiveProgress}
+            aria-label="Simulate five minutes live"
+            disabled={!props.uiState.joined || !overlayConnected || props.uiState.liveMinutes >= 20}
+          >
+            Simulate +5m live
+          </button>
+      </section>
+
+      <section className="streamer-card-soft mt-4 rounded-xl p-3">
+        <h3 className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--streamer-muted)]">Proof timeline</h3>
+        <ul className="mt-3 space-y-2" data-testid="proof-timeline-list">
+          {props.activityLog.slice(0, 5).map((entry) => (
+            <li key={entry.id} className="rounded-lg border border-white/10 bg-black/25 px-3 py-2">
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-xs font-semibold text-slate-100">{entry.title}</p>
+                <p className="text-[10px] uppercase tracking-wide text-slate-400">{formatUtcClock(entry.ts)} UTC</p>
+              </div>
+              <p className="mt-1 text-xs text-slate-300">{entry.detail}</p>
+            </li>
+          ))}
+        </ul>
       </section>
     </aside>
   );
