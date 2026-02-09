@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply text-ink;
+  background:
+    radial-gradient(circle at 12% -10%, rgba(25, 132, 255, 0.17), transparent 38%),
+    radial-gradient(circle at 88% 0%, rgba(35, 198, 171, 0.12), transparent 34%),
+    linear-gradient(180deg, #f6faff 0%, #eef3fb 46%, #e8effb 100%);
+}
+
+.dashboard-grid {
+  background-image: radial-gradient(circle at 1px 1px, rgba(16, 24, 32, 0.09) 1px, transparent 0);
+  background-size: 20px 20px;
+}
+
+.portal-shell {
+  position: relative;
+  isolation: isolate;
+}
+
+.portal-frame {
+  border: 1px solid rgba(16, 24, 32, 0.08);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.93), rgba(250, 253, 255, 0.88));
+  box-shadow:
+    0 24px 60px rgba(13, 26, 46, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(14px);
+}
+
+.portal-card {
+  border: 1px solid rgba(16, 24, 32, 0.1);
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.96), rgba(246, 250, 255, 0.94));
+  box-shadow: 0 16px 34px rgba(16, 24, 32, 0.08);
+}
+
+.portal-chip {
+  border: 1px solid rgba(35, 105, 191, 0.28);
+  background: rgba(35, 105, 191, 0.1);
+  color: #1f4f99;
+}
+
+.portal-grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(16, 24, 32, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(16, 24, 32, 0.05) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+.streamer-theme {
+  --streamer-bg: #050a14;
+  --streamer-bg-soft: #0b1324;
+  --streamer-panel: rgba(19, 28, 45, 0.95);
+  --streamer-panel-soft: rgba(15, 22, 36, 0.9);
+  --streamer-border: rgba(194, 218, 255, 0.18);
+  --streamer-text: #edf4ff;
+  --streamer-muted: #9db0cb;
+  --streamer-accent: #3f8cff;
+  --streamer-ok: #19c58f;
+  --streamer-bad: #f86175;
+  background:
+    radial-gradient(circle at 10% 4%, rgba(65, 152, 255, 0.21), transparent 32%),
+    radial-gradient(circle at 84% -3%, rgba(13, 228, 181, 0.12), transparent 30%),
+    linear-gradient(180deg, var(--streamer-bg-soft) 0%, var(--streamer-bg) 62%);
+  color: var(--streamer-text);
+}
+
+.streamer-frame {
+  background:
+    linear-gradient(140deg, rgba(8, 13, 24, 0.97), rgba(5, 9, 18, 0.97)),
+    radial-gradient(circle at 80% 10%, rgba(63, 140, 255, 0.1), transparent 40%);
+  box-shadow:
+    0 35px 90px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.streamer-card {
+  border: 1px solid var(--streamer-border);
+  background:
+    linear-gradient(165deg, var(--streamer-panel), rgba(11, 17, 30, 0.96));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.streamer-card-soft {
+  border: 1px solid rgba(194, 218, 255, 0.11);
+  background: linear-gradient(160deg, rgba(20, 29, 47, 0.74), var(--streamer-panel-soft));
+}
+
+.streamer-pill {
+  border: 1px solid rgba(194, 218, 255, 0.25);
+  background: rgba(10, 16, 28, 0.62);
+}

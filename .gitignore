@@ -1,0 +1,17 @@
+node_modules
+.pnpm-store
+.env
+.env.*
+!.env.example
+.next
+dist
+coverage
+.turbo
+*.log
+*.tsbuildinfo
+.DS_Store
+apps/**/.next
+apps/**/out
+packages/db/generated
+output
+tmp
