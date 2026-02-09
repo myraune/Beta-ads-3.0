@@ -2,10 +2,10 @@ import Link from "next/link";
 
 const portals = [
   {
-    href: "/agency",
-    title: "Agency and Brand Portal",
-    summary: "Campaign setup, creative approvals, delivery triggers, and live reporting.",
-    cta: "Open Agency"
+    href: "/business",
+    title: "Business Portal",
+    summary: "Agency and brand workspace with streamer marketplace, campaign launch, and live reporting.",
+    cta: "Open Business"
   },
   {
     href: "/streamer/login",
@@ -22,7 +22,7 @@ const portals = [
 ];
 
 const highlights = [
-  { label: "MVP mode", value: "Realtime demo" },
+  { label: "Platform model", value: "Admin, Business, Streamer" },
   { label: "Delivery policy", value: "Impression = ad_completed" },
   { label: "Time standard", value: "UTC across all events" }
 ];
@@ -40,7 +40,7 @@ export default function HomePage() {
           </h1>
           <p className="mt-4 max-w-3xl text-base text-ink/75 md:text-lg">
             This software provides campaign orchestration, streamer delivery control, and proof-based reporting through
-            a clean operator-first interface.
+            three dedicated platforms, Admin for Beta Ads operations, Business for customers, and Streamer for campaign delivery.
           </p>
         </header>
 
