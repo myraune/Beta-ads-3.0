@@ -12,7 +12,12 @@ const BASE_FLOW_STATE: StreamerFlowState = {
   overlayConnected: false,
   joinedCampaignIds: ["714"],
   selectedCampaignId: "714",
-  lastTestRunAt: null
+  lastTestRunAt: null,
+  overlayPlacementMode: "automatic",
+  minimumCooldownMinutes: 35,
+  startDelayMinutes: 20,
+  overlayServiceEnabled: true,
+  darkModeEnabled: true
 };
 
 function seedFlowState(overrides: Partial<StreamerFlowState> = {}) {

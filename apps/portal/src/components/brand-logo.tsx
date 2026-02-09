@@ -1,3 +1,5 @@
+"use client";
+
 import { withBasePath } from "@/lib/with-base-path";
 
 type BrandLogoKind = "horizontal" | "mark";
@@ -33,11 +35,15 @@ export interface BrandLogoProps {
   surface: BrandLogoSurface;
   size?: BrandLogoSize;
   className?: string;
+  dataTestId?: string;
 }
 
 export function BrandLogo(props: BrandLogoProps) {
   const size = props.size ?? "md";
   const src = withBasePath(SOURCE_MAP[props.kind][props.surface]);
+  const fallbackSrc = withBasePath(
+    props.kind === "horizontal" ? "/brand/h-logo-light.svg" : "/brand/brandmark-light.svg"
+  );
   const dimensions = DIMENSIONS[props.kind][size];
   const alt = props.kind === "horizontal" ? "Beta Ads logo" : "Beta Ads mark";
 
@@ -50,6 +56,15 @@ export function BrandLogo(props: BrandLogoProps) {
       height={dimensions.height}
       className={props.className}
       decoding="async"
+      loading="eager"
+      data-testid={props.dataTestId}
+      onError={(event) => {
+        const element = event.currentTarget;
+        if (element.src.endsWith(fallbackSrc)) {
+          return;
+        }
+        element.src = fallbackSrc;
+      }}
     />
   );
 }

@@ -1,4 +1,12 @@
-import type { CampaignWorkspaceData, SetupGuideTab, SponsorshipCard } from "@/types/streamer";
+import type {
+  CampaignWorkspaceData,
+  SetupGuideTab,
+  SponsorshipCard,
+  StreamerHelpData,
+  StreamerSettingsData,
+  StreamerStatisticsData,
+  StreamerWalletData
+} from "@/types/streamer";
 
 export const STREAMER_SOURCE_SNIPPET = "https://overlay.betaads.local/overlay?key=beta_live_overlay_key";
 
@@ -422,3 +430,105 @@ export function getWorkspaceCampaignById(campaignIdOrSlug?: string | null): Camp
     ) ?? DEFAULT_STREAMER_WORKSPACE_DATA
   );
 }
+
+export const STREAMER_WALLET_DATA: StreamerWalletData = {
+  stats: [
+    { label: "Sponsorship earnings", value: "$3,420", helper: "Unlocked revenue" },
+    { label: "Referral earnings", value: "$288", helper: "Pending verification" },
+    { label: "Tip earnings", value: "$76", helper: "Last 30 days" },
+    { label: "Payable balance", value: "$2,104", helper: "Available now" }
+  ],
+  thresholdProgressPercent: 64,
+  thresholdLabel: "$3,200 / $5,000 payout threshold reached",
+  payouts: [
+    {
+      id: "po_192",
+      date: "2026-02-01",
+      campaign: "Project Pulse NVX",
+      gross: "$740",
+      withholding: "$74",
+      net: "$666",
+      status: "processing"
+    },
+    {
+      id: "po_181",
+      date: "2026-01-11",
+      campaign: "VoidBox Q4 Creator Drive",
+      gross: "$620",
+      withholding: "$62",
+      net: "$558",
+      status: "paid"
+    },
+    {
+      id: "po_167",
+      date: "2025-12-22",
+      campaign: "Northforge Creator Tools",
+      gross: "$412",
+      withholding: "$41",
+      net: "$371",
+      status: "paid"
+    }
+  ]
+};
+
+export const STREAMER_STATISTICS_DATA: StreamerStatisticsData = {
+  cards: [
+    { id: "imp", title: "Impressions", value: "2,482", detail: "ad_completed events" },
+    { id: "clicks", title: "Clicks", value: "71", detail: "Overlay and chat CTA" },
+    { id: "ctr", title: "CTR", value: "2.86%", detail: "Last 30 days" },
+    { id: "minutes", title: "Minutes on screen", value: "314", detail: "Proxy attention signal" }
+  ],
+  rows: [
+    { date: "2026-02-09", impressions: 144, clicks: 5, ctr: "3.47%", minutesOnScreen: 21 },
+    { date: "2026-02-08", impressions: 132, clicks: 4, ctr: "3.03%", minutesOnScreen: 19 },
+    { date: "2026-02-07", impressions: 119, clicks: 2, ctr: "1.68%", minutesOnScreen: 16 },
+    { date: "2026-02-06", impressions: 101, clicks: 3, ctr: "2.97%", minutesOnScreen: 14 },
+    { date: "2026-02-05", impressions: 97, clicks: 2, ctr: "2.06%", minutesOnScreen: 12 }
+  ]
+};
+
+export const STREAMER_HELP_DATA: StreamerHelpData = {
+  faqs: [
+    {
+      id: "faq_1",
+      question: "How does Beta Ads proof of delivery work?",
+      answer: "Every ad_completed event is recorded in UTC and contributes to campaign impressions and payout calculations.",
+      category: "general"
+    },
+    {
+      id: "faq_2",
+      question: "Why are overlays not showing during my stream?",
+      answer: "Check OBS source visibility, verify heartbeat connection, and confirm your setup status in the setup route.",
+      category: "setup"
+    },
+    {
+      id: "faq_3",
+      question: "When can I request payout?",
+      answer: "Payout unlocks after threshold is met and campaign review is complete. Admin can mark payout status manually in MVP.",
+      category: "payouts"
+    }
+  ],
+  tickets: [
+    { id: "tk_2044", subject: "Overlay flickers after scene switch", status: "open", updatedAt: "2026-02-09T09:12:00Z" },
+    { id: "tk_1993", subject: "Need help with panel banner link", status: "waiting", updatedAt: "2026-02-08T15:44:00Z" },
+    { id: "tk_1902", subject: "Payout status clarification", status: "resolved", updatedAt: "2026-02-05T18:02:00Z" }
+  ]
+};
+
+export const STREAMER_SETTINGS_DATA: StreamerSettingsData = {
+  profile: {
+    fullName: "Andreas Myraune",
+    email: "andreas@betaads.local",
+    language: "English",
+    country: "Norway"
+  },
+  platformConnections: [
+    { provider: "twitch", connected: true },
+    { provider: "youtube", connected: false },
+    { provider: "kick", connected: false }
+  ],
+  sponsorshipPreferences: {
+    autoAccept: "selected",
+    selectedBrands: ["Nimbus Hardware", "Arcwire Networks", "IonFrame"]
+  }
+};

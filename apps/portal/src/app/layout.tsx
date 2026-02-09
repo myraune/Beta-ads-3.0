@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${heading.variable} ${mono.variable}`}>
-      <body className="min-h-screen bg-gradient-to-br from-fog via-white to-[#e9f7f2]">{children}</body>
+      <body className="min-h-screen antialiased">{children}</body>
     </html>
   );
 }

@@ -1,5 +1,5 @@
-import { BusinessPortalPage } from "@/components/business-portal-page";
+import { BusinessDashboard } from "@/components/business-dashboard";
 
-export default function BusinessPortalRoute() {
-  return <BusinessPortalPage />;
+export default function BusinessOverviewPage() {
+  return <BusinessDashboard />;
 }

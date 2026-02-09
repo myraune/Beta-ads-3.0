@@ -20,6 +20,10 @@ export async function fetchCampaigns() {
   return request<Array<{ id: string; name: string; status: string; advertiser: string }>>("/campaigns");
 }
 
-export async function fetchAudit() {
-  return request<Array<{ id: string; action: string; entityType: string; createdAt: string }>>("/admin/audit?limit=8");
+export async function fetchCampaignById(id: string) {
+  return request<{ id: string; name: string; status: string; advertiser: string; objective?: string }>(`/campaigns/${id}`);
+}
+
+export async function fetchAudit(limit = 8) {
+  return request<Array<{ id: string; action: string; entityType: string; createdAt: string }>>(`/admin/audit?limit=${limit}`);
 }

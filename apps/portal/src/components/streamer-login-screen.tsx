@@ -42,7 +42,13 @@ export function StreamerLoginScreen(props: StreamerLoginScreenProps) {
           <span className="streamer-brand-mark-shell inline-flex items-center justify-center rounded-xl border border-cyan-300/35 bg-cyan-500/10 p-2">
             <BrandLogo kind="mark" surface="dark" size="md" className="streamer-brand-logo streamer-brand-logo--mark" />
           </span>
-          <BrandLogo kind="horizontal" surface="dark" size="md" className="streamer-brand-logo streamer-brand-logo--horizontal" />
+          <BrandLogo
+            kind="horizontal"
+            surface="dark"
+            size="md"
+            dataTestId="streamer-login-logo"
+            className="streamer-brand-logo streamer-brand-logo--horizontal"
+          />
         </div>
         <p className="streamer-surface-chip mt-4 inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em]">
           Streamer access

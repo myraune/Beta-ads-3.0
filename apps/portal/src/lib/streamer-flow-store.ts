@@ -13,7 +13,12 @@ const DEFAULT_STREAMER_FLOW_STATE: StreamerFlowState = {
   overlayConnected: false,
   joinedCampaignIds: [],
   selectedCampaignId: null,
-  lastTestRunAt: null
+  lastTestRunAt: null,
+  overlayPlacementMode: "automatic",
+  minimumCooldownMinutes: 35,
+  startDelayMinutes: 20,
+  overlayServiceEnabled: true,
+  darkModeEnabled: true
 };
 
 let memoryFallbackState: StreamerFlowState = {
@@ -50,7 +55,22 @@ function sanitizeFlowState(candidate: unknown): StreamerFlowState {
     overlayConnected: Boolean(raw.overlayConnected),
     joinedCampaignIds: uniqueJoinedIds,
     selectedCampaignId: typeof raw.selectedCampaignId === "string" ? raw.selectedCampaignId : null,
-    lastTestRunAt: typeof raw.lastTestRunAt === "string" ? raw.lastTestRunAt : null
+    lastTestRunAt: typeof raw.lastTestRunAt === "string" ? raw.lastTestRunAt : null,
+    overlayPlacementMode: raw.overlayPlacementMode === "manual" ? "manual" : "automatic",
+    minimumCooldownMinutes:
+      typeof raw.minimumCooldownMinutes === "number" && Number.isFinite(raw.minimumCooldownMinutes)
+        ? Math.min(60, Math.max(10, Math.round(raw.minimumCooldownMinutes)))
+        : DEFAULT_STREAMER_FLOW_STATE.minimumCooldownMinutes,
+    startDelayMinutes:
+      typeof raw.startDelayMinutes === "number" && Number.isFinite(raw.startDelayMinutes)
+        ? Math.min(60, Math.max(5, Math.round(raw.startDelayMinutes)))
+        : DEFAULT_STREAMER_FLOW_STATE.startDelayMinutes,
+    overlayServiceEnabled:
+      typeof raw.overlayServiceEnabled === "boolean"
+        ? raw.overlayServiceEnabled
+        : DEFAULT_STREAMER_FLOW_STATE.overlayServiceEnabled,
+    darkModeEnabled:
+      typeof raw.darkModeEnabled === "boolean" ? raw.darkModeEnabled : DEFAULT_STREAMER_FLOW_STATE.darkModeEnabled
   };
 }
 

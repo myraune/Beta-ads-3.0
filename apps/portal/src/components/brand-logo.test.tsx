@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { BrandLogo } from "./brand-logo";
 
 describe("BrandLogo", () => {
@@ -31,5 +31,15 @@ describe("BrandLogo", () => {
 
     expect(horizontal).toHaveAttribute("src", expect.stringContaining("/brand/h-logo-dark.svg"));
     expect(mark).toHaveAttribute("src", expect.stringContaining("/brand/brandmark-dark.svg"));
+  });
+
+  it("falls back to light asset if source fails", () => {
+    render(<BrandLogo kind="horizontal" surface="light" dataTestId="brand-logo-fallback" />);
+
+    const logo = screen.getByTestId("brand-logo-fallback");
+    expect(logo).toHaveAttribute("src", expect.stringContaining("/brand/h-logo-dark.svg"));
+
+    fireEvent.error(logo);
+    expect(logo).toHaveAttribute("src", expect.stringContaining("/brand/h-logo-light.svg"));
   });
 });

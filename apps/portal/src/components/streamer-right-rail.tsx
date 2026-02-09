@@ -97,6 +97,24 @@ export function StreamerRightRail(props: StreamerRightRailProps) {
           </div>
 
           <div className="flex items-center justify-between rounded-lg border border-white/10 bg-slate-950/55 px-3 py-2">
+            <span className="text-sm text-slate-300">Overlay service</span>
+            <span
+              className={`rounded-full px-2 py-1 text-xs font-semibold uppercase tracking-wide ${
+                props.flowState?.overlayServiceEnabled ? "bg-emerald-500/20 text-emerald-200" : "bg-rose-500/20 text-rose-200"
+              }`}
+            >
+              {props.flowState?.overlayServiceEnabled ? "enabled" : "disabled"}
+            </span>
+          </div>
+
+          <div className="flex items-center justify-between rounded-lg border border-white/10 bg-slate-950/55 px-3 py-2">
+            <span className="text-sm text-slate-300">Placement mode</span>
+            <span className="rounded-full bg-slate-700/40 px-2 py-1 text-xs font-semibold uppercase tracking-wide text-slate-200">
+              {props.flowState?.overlayPlacementMode ?? "automatic"}
+            </span>
+          </div>
+
+          <div className="flex items-center justify-between rounded-lg border border-white/10 bg-slate-950/55 px-3 py-2">
             <span className="text-sm text-slate-300">Requirements</span>
             <span
               data-testid="requirements-status-badge"
@@ -142,15 +160,15 @@ export function StreamerRightRail(props: StreamerRightRailProps) {
           </button>
         </div>
 
-          <button
-            type="button"
-            className="mt-2 w-full rounded-lg border border-cyan-300/35 bg-cyan-500/10 px-2 py-2 text-xs font-medium uppercase tracking-wide text-cyan-100 transition hover:border-cyan-300/70 disabled:cursor-not-allowed disabled:opacity-60"
-            onClick={props.onSimulateLiveProgress}
-            aria-label="Simulate five minutes live"
-            disabled={!props.uiState.joined || !overlayConnected || props.uiState.liveMinutes >= 20}
-          >
-            Simulate +5m live
-          </button>
+        <button
+          type="button"
+          className="mt-2 w-full rounded-lg border border-cyan-300/35 bg-cyan-500/10 px-2 py-2 text-xs font-medium uppercase tracking-wide text-cyan-100 transition hover:border-cyan-300/70 disabled:cursor-not-allowed disabled:opacity-60"
+          onClick={props.onSimulateLiveProgress}
+          aria-label="Simulate five minutes live"
+          disabled={!props.uiState.joined || !overlayConnected || props.uiState.liveMinutes >= 20}
+        >
+          Simulate +5m live
+        </button>
       </section>
 
       <section className="streamer-card-soft mt-4 rounded-xl p-3">

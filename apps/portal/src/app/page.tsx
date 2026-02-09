@@ -1,22 +1,23 @@
 import Link from "next/link";
+import { BrandLogo } from "@/components/brand-logo";
 
 const portals = [
   {
     href: "/business",
-    title: "Business Portal",
-    summary: "Agency and brand workspace with streamer marketplace, campaign launch, and live reporting.",
+    title: "Business Platform",
+    summary: "Streamer explorer, campaign wizard, reporting exports, and billing visibility.",
     cta: "Open Business"
   },
   {
     href: "/streamer/login",
-    title: "Streamer Workspace",
-    summary: "Campaign brief, requirements, and overlay controls with real-time status.",
+    title: "Streamer Platform",
+    summary: "Connect Twitch, run OBS setup, manage sponsorships, and track payouts.",
     cta: "Open Streamer"
   },
   {
     href: "/admin",
-    title: "Admin Operations",
-    summary: "Audit timeline, payout control, and reliability visibility across sessions.",
+    title: "Admin Platform",
+    summary: "Moderation queue, risk operations, audit timeline, and system health.",
     cta: "Open Admin"
   }
 ];
@@ -24,31 +25,34 @@ const portals = [
 const highlights = [
   { label: "Platform model", value: "Admin, Business, Streamer" },
   { label: "Delivery policy", value: "Impression = ad_completed" },
-  { label: "Time standard", value: "UTC across all events" }
+  { label: "Time standard", value: "UTC globally enforced" }
 ];
 
 export default function HomePage() {
   return (
-    <main className="portal-shell mx-auto min-h-screen max-w-6xl px-6 py-10">
-      <div className="portal-frame rounded-3xl p-6 md:p-8">
-        <header className="rounded-2xl border border-ink/10 bg-white/60 p-6 backdrop-blur">
-          <p className="portal-chip inline-flex rounded-full px-3 py-1 font-[family-name:var(--font-mono)] text-xs uppercase tracking-[0.24em]">
+    <main className="mx-auto min-h-screen max-w-6xl px-6 py-10">
+      <div className="beta-glass-card rounded-3xl p-6 md:p-8">
+        <header className="rounded-2xl border border-white/10 bg-black/20 p-6 backdrop-blur">
+          <div className="flex items-center gap-3">
+            <BrandLogo kind="mark" surface="dark" size="md" dataTestId="home-brand-mark" className="streamer-brand-logo streamer-brand-logo--mark" />
+            <BrandLogo kind="horizontal" surface="dark" size="md" dataTestId="home-brand-logo" className="streamer-brand-logo streamer-brand-logo--horizontal" />
+          </div>
+          <p className="mt-4 inline-flex rounded-full border border-rose-300/35 bg-rose-500/10 px-3 py-1 font-[family-name:var(--font-mono)] text-xs uppercase tracking-[0.24em] text-rose-200">
             Beta Live Ads Platform
           </p>
-          <h1 className="mt-4 font-[family-name:var(--font-heading)] text-4xl font-semibold tracking-tight text-ink md:text-5xl">
-            Modern Control Surface for Live Stream Advertising
+          <h1 className="mt-4 font-[family-name:var(--font-heading)] text-4xl font-semibold tracking-tight text-slate-50 md:text-5xl">
+            Three role system for live ad delivery
           </h1>
-          <p className="mt-4 max-w-3xl text-base text-ink/75 md:text-lg">
-            This software provides campaign orchestration, streamer delivery control, and proof-based reporting through
-            three dedicated platforms, Admin for Beta Ads operations, Business for customers, and Streamer for campaign delivery.
+          <p className="mt-4 max-w-3xl text-base text-slate-300 md:text-lg">
+            Business launches campaigns, streamers deliver campaigns with proof events, and admin governs reliability and payout operations.
           </p>
         </header>
 
-        <section className="portal-grid-bg mt-6 grid gap-3 rounded-2xl border border-ink/10 bg-white/45 p-3 md:grid-cols-3">
+        <section className="mt-6 grid gap-3 rounded-2xl border border-white/10 bg-black/20 p-3 md:grid-cols-3">
           {highlights.map((item) => (
-            <div key={item.label} className="rounded-xl border border-ink/10 bg-white/80 p-4">
-              <p className="text-xs uppercase tracking-[0.2em] text-ink/55">{item.label}</p>
-              <p className="mt-2 text-lg font-semibold text-ink">{item.value}</p>
+            <div key={item.label} className="rounded-xl border border-slate-600/60 bg-slate-900/70 p-4">
+              <p className="text-xs uppercase tracking-[0.2em] text-slate-400">{item.label}</p>
+              <p className="mt-2 text-lg font-semibold text-slate-100">{item.value}</p>
             </div>
           ))}
         </section>
@@ -58,11 +62,11 @@ export default function HomePage() {
             <Link
               key={portal.href}
               href={portal.href}
-              className="portal-card group rounded-2xl p-5 transition duration-150 hover:-translate-y-0.5"
+              className="group rounded-2xl border border-slate-600/55 bg-slate-900/70 p-5 transition duration-150 hover:-translate-y-0.5 hover:border-rose-300/40"
             >
-              <h2 className="font-[family-name:var(--font-heading)] text-xl font-semibold text-ink">{portal.title}</h2>
-              <p className="mt-3 min-h-[72px] text-sm leading-relaxed text-ink/75">{portal.summary}</p>
-              <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#1f4f99]">
+              <h2 className="font-[family-name:var(--font-heading)] text-xl font-semibold text-white">{portal.title}</h2>
+              <p className="mt-3 min-h-[72px] text-sm leading-relaxed text-slate-300">{portal.summary}</p>
+              <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-rose-200">
                 {portal.cta}
                 <span aria-hidden="true">-&gt;</span>
               </span>

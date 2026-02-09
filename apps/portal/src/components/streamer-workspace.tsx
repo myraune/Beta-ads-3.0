@@ -166,6 +166,11 @@ export function StreamerWorkspace(props: StreamerWorkspaceProps) {
       return;
     }
 
+    if (!flowState.overlayServiceEnabled) {
+      pushActivity("Overlay service disabled", "Enable overlay service in settings before connecting.");
+      return;
+    }
+
     const nextOverlayConnected = !uiState.overlayConnected;
     setUiState((previous) => ({
       ...previous,
@@ -298,6 +303,15 @@ export function StreamerWorkspace(props: StreamerWorkspaceProps) {
           </div>
         ) : null}
 
+        {!flowState.overlayServiceEnabled ? (
+          <div className="mb-4 rounded-xl border border-rose-300/35 bg-rose-500/10 px-4 py-3 text-sm text-rose-100" data-testid="workspace-overlay-service-guard">
+            Overlay service is disabled in settings. Enable it before going live.
+            <Link href="/streamer/settings" className="ml-2 font-semibold underline">
+              Open settings
+            </Link>
+          </div>
+        ) : null}
+
         <header className="mb-4 rounded-2xl border border-white/10 bg-black/30 p-4">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
@@ -305,7 +319,13 @@ export function StreamerWorkspace(props: StreamerWorkspaceProps) {
                 <span className="streamer-brand-mark-shell inline-flex items-center justify-center rounded-xl border border-cyan-300/30 bg-cyan-500/10 p-1.5">
                   <BrandLogo kind="mark" surface="dark" size="sm" className="streamer-brand-logo streamer-brand-logo--mark" />
                 </span>
-                <BrandLogo kind="horizontal" surface="dark" size="sm" className="streamer-brand-logo streamer-brand-logo--horizontal" />
+                <BrandLogo
+                  kind="horizontal"
+                  surface="dark"
+                  size="sm"
+                  dataTestId="streamer-workspace-logo"
+                  className="streamer-brand-logo streamer-brand-logo--horizontal"
+                />
               </div>
               <p className="inline-flex rounded-full border border-cyan-300/35 bg-cyan-500/10 px-3 py-1 text-xs uppercase tracking-[0.24em] text-cyan-100">
                 Streamer workspace

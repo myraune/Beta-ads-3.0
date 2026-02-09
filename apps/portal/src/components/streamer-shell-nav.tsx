@@ -8,14 +8,23 @@ import type { StreamerShellNavItem } from "@/types/streamer";
 
 const NAV_ITEMS: StreamerShellNavItem[] = [
   { id: "sponsorships", label: "Sponsorships", href: "/streamer" },
-  { id: "clips", label: "My clips", comingSoon: true },
-  { id: "wallet", label: "Wallet", comingSoon: true },
-  { id: "statistics", label: "Statistics", comingSoon: true },
-  { id: "help", label: "Help", comingSoon: true }
+  { id: "clips", label: "My clips", href: "/streamer/clips" },
+  { id: "wallet", label: "Wallet", href: "/streamer/wallet" },
+  { id: "statistics", label: "Statistics", href: "/streamer/statistics" },
+  { id: "help", label: "Help", href: "/streamer/help" },
+  { id: "settings", label: "Settings", href: "/streamer/settings" }
 ];
 
-function isSponsorshipRoute(pathname: string): boolean {
-  return pathname.startsWith("/streamer");
+function isItemActive(pathname: string, item: StreamerShellNavItem): boolean {
+  if (!item.href) {
+    return false;
+  }
+
+  if (item.id === "sponsorships") {
+    return pathname === "/streamer" || pathname === "/streamer/workspace";
+  }
+
+  return pathname === item.href || pathname.startsWith(`${item.href}/`);
 }
 
 export function StreamerShellNav() {
@@ -27,7 +36,13 @@ export function StreamerShellNav() {
       <div className="mx-auto flex max-w-[1700px] flex-wrap items-center justify-between gap-3 px-4 py-3">
         <div className="flex items-center gap-5">
           <Link href="/streamer" className="flex items-center gap-3 text-slate-100" aria-label="Beta Ads streamer home">
-            <BrandLogo kind="horizontal" surface="dark" size="md" className="streamer-brand-logo streamer-brand-logo--horizontal" />
+            <BrandLogo
+              kind="horizontal"
+              surface="dark"
+              size="md"
+              dataTestId="streamer-shell-logo"
+              className="streamer-brand-logo streamer-brand-logo--horizontal"
+            />
             <span className="streamer-brand-chip rounded-full border border-cyan-300/30 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-cyan-200">
               Stream Ops
             </span>
@@ -35,34 +50,18 @@ export function StreamerShellNav() {
 
           <nav className="flex flex-wrap items-center gap-1 rounded-xl border border-slate-700/60 bg-slate-950/45 p-1">
             {NAV_ITEMS.map((item) => {
-              const active = item.id === "sponsorships" && isSponsorshipRoute(pathname);
-
-              if (item.href && !item.comingSoon) {
-                return (
-                  <Link
-                    key={item.id}
-                    href={item.href}
-                    className={`streamer-nav-link rounded-lg px-3 py-2 text-sm font-semibold transition ${
-                      active ? "streamer-nav-link-active" : ""
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              }
+              const active = isItemActive(pathname, item);
 
               return (
-                <button
+                <Link
                   key={item.id}
-                  type="button"
-                  className="streamer-nav-soon inline-flex cursor-not-allowed items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-slate-500"
-                  aria-disabled="true"
+                  href={item.href ?? "/streamer"}
+                  className={`streamer-nav-link rounded-lg px-3 py-2 text-sm font-semibold transition ${
+                    active ? "streamer-nav-link-active" : ""
+                  }`}
                 >
                   {item.label}
-                  <span className="rounded-full border border-slate-600 bg-slate-900 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-slate-300">
-                    Soon
-                  </span>
-                </button>
+                </Link>
               );
             })}
           </nav>

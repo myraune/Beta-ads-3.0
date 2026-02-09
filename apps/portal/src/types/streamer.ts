@@ -5,6 +5,7 @@ export type WorkflowStepStatus = "pending" | "active" | "complete";
 export type ConnectProvider = "twitch" | "youtube" | "kick";
 
 export type SponsorshipTab = "my" | "available";
+export type OverlayPlacementMode = "automatic" | "manual";
 
 export interface StreamerFlowState {
   providerConnected: boolean;
@@ -14,6 +15,11 @@ export interface StreamerFlowState {
   joinedCampaignIds: string[];
   selectedCampaignId: string | null;
   lastTestRunAt: string | null;
+  overlayPlacementMode: OverlayPlacementMode;
+  minimumCooldownMinutes: number;
+  startDelayMinutes: number;
+  overlayServiceEnabled: boolean;
+  darkModeEnabled: boolean;
 }
 
 export interface CampaignRequirement {
@@ -46,10 +52,9 @@ export interface SetupGuideTab {
 }
 
 export interface StreamerShellNavItem {
-  id: "sponsorships" | "clips" | "wallet" | "statistics" | "help";
+  id: "sponsorships" | "clips" | "wallet" | "statistics" | "help" | "settings";
   label: string;
   href?: string;
-  comingSoon?: boolean;
 }
 
 export interface CampaignWorkspaceData {
@@ -139,6 +144,89 @@ export interface ProofTimelineEvent {
 export interface StreamerWorkspaceProps {
   data?: CampaignWorkspaceData;
   campaignId?: string;
+}
+
+export interface StreamerWalletStat {
+  label: string;
+  value: string;
+  helper: string;
+}
+
+export interface StreamerWalletPayoutRow {
+  id: string;
+  date: string;
+  campaign: string;
+  gross: string;
+  withholding: string;
+  net: string;
+  status: "queued" | "processing" | "paid";
+}
+
+export interface StreamerWalletData {
+  stats: StreamerWalletStat[];
+  thresholdProgressPercent: number;
+  thresholdLabel: string;
+  payouts: StreamerWalletPayoutRow[];
+}
+
+export interface StreamerStatisticsCard {
+  id: string;
+  title: string;
+  value: string;
+  detail: string;
+}
+
+export interface StreamerStatisticsRow {
+  date: string;
+  impressions: number;
+  clicks: number;
+  ctr: string;
+  minutesOnScreen: number;
+}
+
+export interface StreamerStatisticsData {
+  cards: StreamerStatisticsCard[];
+  rows: StreamerStatisticsRow[];
+}
+
+export interface StreamerHelpFaq {
+  id: string;
+  question: string;
+  answer: string;
+  category: "general" | "setup" | "payouts";
+}
+
+export interface StreamerSupportTicket {
+  id: string;
+  subject: string;
+  status: "open" | "waiting" | "resolved";
+  updatedAt: string;
+}
+
+export interface StreamerHelpData {
+  faqs: StreamerHelpFaq[];
+  tickets: StreamerSupportTicket[];
+}
+
+export interface StreamerSettingsProfile {
+  fullName: string;
+  email: string;
+  language: string;
+  country: string;
+}
+
+export interface StreamerPlatformConnection {
+  provider: ConnectProvider;
+  connected: boolean;
+}
+
+export interface StreamerSettingsData {
+  profile: StreamerSettingsProfile;
+  platformConnections: StreamerPlatformConnection[];
+  sponsorshipPreferences: {
+    autoAccept: "all" | "selected" | "manual";
+    selectedBrands: string[];
+  };
 }
 
 export interface StreamerLeftNavProps {
