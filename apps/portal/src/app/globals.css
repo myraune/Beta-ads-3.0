@@ -9,10 +9,13 @@
 body {
   @apply text-ink;
   background:
-    radial-gradient(circle at 10% -10%, rgba(240, 66, 103, 0.22), transparent 34%),
-    radial-gradient(circle at 86% -2%, rgba(59, 130, 246, 0.2), transparent 30%),
-    linear-gradient(180deg, #060910 0%, #050811 55%, #03060c 100%);
+    radial-gradient(circle at 7% -12%, rgba(244, 63, 94, 0.26), transparent 33%),
+    radial-gradient(circle at 88% -4%, rgba(37, 99, 235, 0.24), transparent 29%),
+    radial-gradient(circle at 52% 112%, rgba(20, 39, 78, 0.55), transparent 45%),
+    linear-gradient(180deg, #04060f 0%, #050812 55%, #03060d 100%);
   color: #dbe8ff;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
 }
 
 .dashboard-grid {
@@ -292,20 +295,22 @@ body {
 .beta-glass-card {
   border: 1px solid rgba(148, 163, 184, 0.24);
   background:
-    linear-gradient(165deg, rgba(11, 20, 36, 0.96), rgba(8, 15, 28, 0.95)),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent);
+    linear-gradient(165deg, rgba(10, 17, 32, 0.98), rgba(7, 14, 27, 0.96)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 18px 36px rgba(0, 0, 0, 0.35);
+    0 22px 50px rgba(0, 0, 0, 0.38);
   backdrop-filter: blur(12px);
 }
 
 .beta-app-shell {
   display: grid;
   min-height: 100vh;
-  grid-template-columns: 250px minmax(0, 1fr);
-  gap: 14px;
-  padding: 14px;
+  grid-template-columns: 272px minmax(0, 1fr);
+  gap: 16px;
+  padding: 16px;
+  width: min(100%, 1940px);
+  margin-inline: auto;
 }
 
 .beta-app-main {
@@ -321,20 +326,37 @@ body {
   justify-content: space-between;
   align-items: flex-end;
   gap: 16px;
-  border-radius: 18px;
-  padding: 16px 18px;
+  border-radius: 20px;
+  padding: 18px 20px;
+  position: sticky;
+  top: 16px;
+  z-index: 20;
 }
 
 .beta-topbar-kicker {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: #93a8c4;
+  color: #9db2ce;
+}
+
+.beta-topbar-role-chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  border: 1px solid rgba(var(--beta-role-accent), 0.45);
+  background: rgba(var(--beta-role-accent), 0.12);
+  color: rgb(240 244 255);
+  padding: 2px 8px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
 }
 
 .beta-topbar-title {
   margin-top: 6px;
-  font-size: clamp(24px, 3vw, 36px);
+  font-size: clamp(24px, 2.7vw, 34px);
   font-weight: 650;
   letter-spacing: -0.02em;
   color: #f3f8ff;
@@ -344,7 +366,18 @@ body {
   margin-top: 6px;
   max-width: 72ch;
   font-size: 14px;
-  color: #9db2cf;
+  color: #a8bfdc;
+}
+
+.beta-topbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  background: rgba(6, 11, 23, 0.7);
+  padding: 6px;
 }
 
 .beta-app-content {
@@ -356,20 +389,40 @@ body {
   grid-template-columns: minmax(0, 1fr) 320px;
 }
 
+.beta-app-rail {
+  position: sticky;
+  top: 112px;
+  align-self: start;
+}
+
 .beta-app-sidebar {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  border-radius: 18px;
-  padding: 14px;
-  min-height: calc(100vh - 28px);
+  gap: 14px;
+  border-radius: 20px;
+  padding: 16px;
+  min-height: calc(100vh - 32px);
   position: sticky;
-  top: 14px;
+  top: 16px;
 }
 
 .beta-sidebar-brand {
   border-bottom: 1px solid rgba(148, 163, 184, 0.2);
-  padding-bottom: 12px;
+  padding-bottom: 14px;
+}
+
+.beta-sidebar-role {
+  margin-top: 10px;
+  display: inline-flex;
+  border-radius: 9999px;
+  border: 1px solid rgba(var(--beta-role-accent), 0.4);
+  background: rgba(var(--beta-role-accent), 0.12);
+  color: #f3f8ff;
+  font-size: 10px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 2px 9px;
 }
 
 .beta-sidebar-nav {
@@ -382,29 +435,34 @@ body {
   align-items: center;
   gap: 10px;
   border: 1px solid rgba(71, 85, 105, 0.52);
-  background: linear-gradient(165deg, rgba(8, 15, 28, 0.94), rgba(7, 13, 25, 0.9));
+  background: linear-gradient(165deg, rgba(8, 15, 28, 0.96), rgba(6, 12, 23, 0.92));
   color: #c8d7ed;
-  border-radius: 11px;
-  padding: 9px 10px;
+  border-radius: 12px;
+  padding: 10px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   transition:
     border-color 130ms ease,
     transform 130ms ease,
-    background-color 130ms ease;
+    background-color 130ms ease,
+    box-shadow 130ms ease;
 }
 
 .beta-nav-item:hover {
-  border-color: rgba(244, 63, 94, 0.44);
+  border-color: rgba(var(--beta-role-accent), 0.5);
   transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
 }
 
 .beta-nav-item-active {
-  border-color: rgba(244, 63, 94, 0.6);
+  border-color: rgba(var(--beta-role-accent), 0.72);
   background:
-    linear-gradient(165deg, rgba(96, 11, 34, 0.75), rgba(34, 9, 17, 0.92)),
+    linear-gradient(165deg, rgba(var(--beta-role-accent), 0.28), rgba(8, 14, 28, 0.92)),
     linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent);
-  color: #ffe3ec;
+  color: #f8fcff;
+  box-shadow:
+    0 0 0 1px rgba(var(--beta-role-accent), 0.2) inset,
+    0 10px 20px rgba(0, 0, 0, 0.24);
 }
 
 .beta-nav-icon {
@@ -418,10 +476,32 @@ body {
   background: rgba(15, 23, 42, 0.64);
   font-size: 10px;
   font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  flex-shrink: 0;
+}
+
+.beta-nav-item-active .beta-nav-icon {
+  border-color: rgba(var(--beta-role-accent), 0.55);
+  background: rgba(var(--beta-role-accent), 0.16);
+}
+
+.beta-nav-copy {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .beta-nav-label {
-  flex: 1 1 auto;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.beta-nav-description {
+  font-size: 11px;
+  color: #8fa7c6;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .beta-nav-badge {
@@ -443,12 +523,12 @@ body {
   border-radius: 16px;
   border: 1px solid rgba(148, 163, 184, 0.24);
   background:
-    linear-gradient(165deg, rgba(10, 18, 34, 0.95), rgba(7, 14, 27, 0.94)),
+    linear-gradient(165deg, rgba(10, 18, 34, 0.98), rgba(7, 14, 27, 0.95)),
     linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent);
   padding: 16px;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.04),
-    0 14px 28px rgba(0, 0, 0, 0.28);
+    0 16px 34px rgba(0, 0, 0, 0.32);
 }
 
 .beta-panel-title {
@@ -472,8 +552,15 @@ body {
 .beta-kpi-card {
   border-radius: 14px;
   border: 1px solid rgba(148, 163, 184, 0.22);
-  background: linear-gradient(165deg, rgba(12, 21, 37, 0.96), rgba(8, 15, 27, 0.95));
+  background:
+    linear-gradient(170deg, rgba(var(--beta-role-accent), 0.08), transparent 38%),
+    linear-gradient(165deg, rgba(12, 21, 37, 0.96), rgba(8, 15, 27, 0.95));
   padding: 14px;
+  transition: transform 130ms ease;
+}
+
+.beta-kpi-card:hover {
+  transform: translateY(-1px);
 }
 
 .beta-kpi-label {
@@ -494,22 +581,26 @@ body {
 .beta-kpi-delta {
   margin-top: 6px;
   font-size: 12px;
-  color: #9ec4dc;
+  color: #9db7d4;
 }
 
 .beta-btn-primary {
   border-radius: 10px;
-  border: 1px solid rgba(244, 63, 94, 0.55);
-  background: linear-gradient(105deg, #7f1230 0%, #be123c 45%, #e11d48 100%);
+  border: 1px solid rgba(var(--beta-role-accent), 0.66);
+  background: linear-gradient(105deg, rgba(var(--beta-role-accent), 0.55) 0%, rgba(var(--beta-role-accent), 0.84) 54%, rgba(var(--beta-role-accent), 1) 100%);
   color: #fff0f4;
   font-weight: 600;
   font-size: 13px;
   padding: 8px 12px;
-  transition: filter 130ms ease;
+  box-shadow: 0 12px 26px rgba(var(--beta-role-accent), 0.28);
+  transition:
+    filter 130ms ease,
+    transform 130ms ease;
 }
 
 .beta-btn-primary:hover {
   filter: brightness(1.06);
+  transform: translateY(-1px);
 }
 
 .beta-btn-ghost {
@@ -520,6 +611,20 @@ body {
   font-weight: 600;
   font-size: 13px;
   padding: 8px 12px;
+  transition:
+    border-color 130ms ease,
+    transform 130ms ease;
+}
+
+.beta-btn-ghost:hover {
+  border-color: rgba(var(--beta-role-accent), 0.5);
+  transform: translateY(-1px);
+}
+
+.beta-topbar-actions .beta-btn-primary,
+.beta-topbar-actions .beta-btn-ghost {
+  min-width: 122px;
+  justify-content: center;
 }
 
 .beta-field {
@@ -567,6 +672,26 @@ body {
   border-bottom: 0;
 }
 
+.beta-table tbody tr {
+  transition: background-color 120ms ease;
+}
+
+.beta-table tbody tr:hover {
+  background: rgba(var(--beta-role-accent), 0.07);
+}
+
+.beta-status-pill {
+  gap: 6px;
+}
+
+.beta-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: currentColor;
+  opacity: 0.88;
+}
+
 .beta-role-streamer {
   --beta-role-accent: 34 211 238;
 }
@@ -579,10 +704,62 @@ body {
   --beta-role-accent: 245 158 11;
 }
 
+.beta-home-shell {
+  position: relative;
+}
+
+.beta-home-frame {
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  background:
+    linear-gradient(165deg, rgba(9, 16, 30, 0.97), rgba(7, 13, 24, 0.97)),
+    radial-gradient(circle at 84% -2%, rgba(37, 99, 235, 0.22), transparent 33%);
+  box-shadow:
+    0 26px 64px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.beta-home-hero {
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background:
+    linear-gradient(165deg, rgba(10, 19, 36, 0.95), rgba(7, 13, 25, 0.95)),
+    radial-gradient(circle at 70% 10%, rgba(244, 63, 94, 0.24), transparent 42%);
+}
+
+.beta-home-signal-card {
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: linear-gradient(165deg, rgba(7, 14, 27, 0.9), rgba(5, 10, 20, 0.92));
+}
+
+.beta-home-card {
+  border: 1px solid rgba(148, 163, 184, 0.26);
+  background:
+    linear-gradient(165deg, rgba(9, 16, 30, 0.94), rgba(5, 10, 20, 0.96)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 16px 30px rgba(0, 0, 0, 0.24);
+}
+
+.beta-home-card:hover {
+  border-color: rgba(244, 63, 94, 0.42);
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 20px 36px rgba(0, 0, 0, 0.34);
+}
+
+.beta-home-grid {
+  position: relative;
+}
+
 @media (max-width: 1279px) {
   .beta-app-shell {
     grid-template-columns: 1fr;
     padding: 10px;
+  }
+
+  .beta-app-topbar {
+    top: 10px;
   }
 
   .beta-app-sidebar {
@@ -596,5 +773,13 @@ body {
 
   .beta-app-content-with-rail {
     grid-template-columns: 1fr;
+  }
+
+  .beta-app-rail {
+    position: static;
+  }
+
+  .beta-nav-description {
+    display: none;
   }
 }

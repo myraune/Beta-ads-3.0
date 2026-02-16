@@ -23,6 +23,9 @@ function campaignTone(status: string): "success" | "warning" | "danger" | "info"
 }
 
 export function BusinessDashboard() {
+  const liveCount = BUSINESS_CAMPAIGNS.filter((campaign) => campaign.status === "live").length;
+  const draftCount = BUSINESS_CAMPAIGNS.filter((campaign) => campaign.status === "draft").length;
+
   return (
     <div className="space-y-4">
       <section className="beta-panel">
@@ -36,6 +39,20 @@ export function BusinessDashboard() {
               <p className="beta-kpi-delta">{kpi.delta}</p>
             </article>
           ))}
+        </div>
+
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          <div className="rounded-xl border border-slate-600/60 bg-slate-950/55 px-4 py-3">
+            <p className="text-[11px] uppercase tracking-[0.16em] text-slate-400">Flight state</p>
+            <p className="mt-2 text-sm text-slate-200">
+              <span className="font-semibold text-emerald-200">{liveCount}</span> live campaigns and{" "}
+              <span className="font-semibold text-sky-200">{draftCount}</span> in draft.
+            </p>
+          </div>
+          <div className="rounded-xl border border-slate-600/60 bg-slate-950/55 px-4 py-3">
+            <p className="text-[11px] uppercase tracking-[0.16em] text-slate-400">Proof policy</p>
+            <p className="mt-2 text-sm text-slate-200">Impressions count only on <code>ad_completed</code>.</p>
+          </div>
         </div>
       </section>
 

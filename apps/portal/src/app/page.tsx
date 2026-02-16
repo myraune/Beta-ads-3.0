@@ -30,43 +30,48 @@ const highlights = [
 
 export default function HomePage() {
   return (
-    <main className="mx-auto min-h-screen max-w-6xl px-6 py-10">
-      <div className="beta-glass-card rounded-3xl p-6 md:p-8">
-        <header className="rounded-2xl border border-white/10 bg-black/20 p-6 backdrop-blur">
-          <div className="flex items-center gap-3">
-            <BrandLogo kind="mark" surface="dark" size="md" dataTestId="home-brand-mark" className="streamer-brand-logo streamer-brand-logo--mark" />
-            <BrandLogo kind="horizontal" surface="dark" size="md" dataTestId="home-brand-logo" className="streamer-brand-logo streamer-brand-logo--horizontal" />
+    <main className="beta-home-shell mx-auto min-h-screen max-w-7xl px-4 py-8 md:px-8 md:py-12">
+      <div className="beta-home-frame rounded-3xl p-5 md:p-8">
+        <header className="beta-home-hero rounded-2xl p-6 md:p-8">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <span className="streamer-brand-mark-shell inline-flex items-center justify-center rounded-xl border border-rose-300/30 bg-rose-500/10 p-2">
+                <BrandLogo kind="mark" surface="dark" size="md" dataTestId="home-brand-mark" className="streamer-brand-logo streamer-brand-logo--mark" />
+              </span>
+              <BrandLogo kind="horizontal" surface="dark" size="md" dataTestId="home-brand-logo" className="streamer-brand-logo streamer-brand-logo--horizontal" />
+            </div>
+            <p className="inline-flex rounded-full border border-rose-300/35 bg-rose-500/10 px-3 py-1 font-[family-name:var(--font-mono)] text-xs uppercase tracking-[0.24em] text-rose-200">
+              Beta Live Ads Platform
+            </p>
           </div>
-          <p className="mt-4 inline-flex rounded-full border border-rose-300/35 bg-rose-500/10 px-3 py-1 font-[family-name:var(--font-mono)] text-xs uppercase tracking-[0.24em] text-rose-200">
-            Beta Live Ads Platform
-          </p>
-          <h1 className="mt-4 font-[family-name:var(--font-heading)] text-4xl font-semibold tracking-tight text-slate-50 md:text-5xl">
-            Three role system for live ad delivery
-          </h1>
-          <p className="mt-4 max-w-3xl text-base text-slate-300 md:text-lg">
-            Business launches campaigns, streamers deliver campaigns with proof events, and admin governs reliability and payout operations.
-          </p>
+
+          <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+            <div>
+              <h1 className="font-[family-name:var(--font-heading)] text-4xl font-semibold tracking-tight text-slate-50 md:text-5xl">
+                Three role system for live ad delivery
+              </h1>
+              <p className="mt-4 max-w-3xl text-base text-slate-300 md:text-lg">
+                Business launches campaigns, streamers deliver placements with proof events, and admin governs reliability with payout oversight.
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              {highlights.map((item) => (
+                <article key={item.label} className="beta-home-signal-card rounded-xl p-4">
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-400">{item.label}</p>
+                  <p className="mt-2 text-base font-semibold text-slate-100">{item.value}</p>
+                </article>
+              ))}
+            </div>
+          </div>
         </header>
 
-        <section className="mt-6 grid gap-3 rounded-2xl border border-white/10 bg-black/20 p-3 md:grid-cols-3">
-          {highlights.map((item) => (
-            <div key={item.label} className="rounded-xl border border-slate-600/60 bg-slate-900/70 p-4">
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-400">{item.label}</p>
-              <p className="mt-2 text-lg font-semibold text-slate-100">{item.value}</p>
-            </div>
-          ))}
-        </section>
-
-        <section className="mt-6 grid gap-4 md:grid-cols-3">
+        <section className="beta-home-grid mt-6 grid gap-4 md:grid-cols-3">
           {portals.map((portal) => (
-            <Link
-              key={portal.href}
-              href={portal.href}
-              className="group rounded-2xl border border-slate-600/55 bg-slate-900/70 p-5 transition duration-150 hover:-translate-y-0.5 hover:border-rose-300/40"
-            >
+            <Link key={portal.href} href={portal.href} className="beta-home-card group rounded-2xl p-5 transition duration-150">
               <h2 className="font-[family-name:var(--font-heading)] text-xl font-semibold text-white">{portal.title}</h2>
               <p className="mt-3 min-h-[72px] text-sm leading-relaxed text-slate-300">{portal.summary}</p>
-              <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-rose-200">
+              <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-rose-200">
                 {portal.cta}
                 <span aria-hidden="true">-&gt;</span>
               </span>

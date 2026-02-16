@@ -19,8 +19,9 @@ export interface StatusPillProps {
 export function StatusPill({ tone = "neutral", children, className }: StatusPillProps) {
   return (
     <span
-      className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] ${TONE_CLASSES[tone]} ${className ?? ""}`}
+      className={`beta-status-pill inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] ${TONE_CLASSES[tone]} ${className ?? ""}`}
     >
+      <span aria-hidden="true" className="beta-status-dot" />
       {children}
     </span>
   );

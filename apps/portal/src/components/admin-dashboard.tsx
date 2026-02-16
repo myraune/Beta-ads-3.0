@@ -15,6 +15,9 @@ function incidentTone(severity: string): "success" | "warning" | "danger" {
 }
 
 export function AdminDashboard() {
+  const highIncidents = ADMIN_INCIDENTS.filter((incident) => incident.severity === "high").length;
+  const mediumIncidents = ADMIN_INCIDENTS.filter((incident) => incident.severity === "medium").length;
+
   return (
     <div className="space-y-4">
       <section className="beta-panel">
@@ -28,6 +31,20 @@ export function AdminDashboard() {
               <p className="beta-kpi-delta">{kpi.detail}</p>
             </article>
           ))}
+        </div>
+
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          <div className="rounded-xl border border-slate-600/60 bg-slate-950/55 px-4 py-3">
+            <p className="text-[11px] uppercase tracking-[0.16em] text-slate-400">Incident severity mix</p>
+            <p className="mt-2 text-sm text-slate-200">
+              <span className="font-semibold text-rose-200">{highIncidents}</span> high and{" "}
+              <span className="font-semibold text-amber-200">{mediumIncidents}</span> medium alerts.
+            </p>
+          </div>
+          <div className="rounded-xl border border-slate-600/60 bg-slate-950/55 px-4 py-3">
+            <p className="text-[11px] uppercase tracking-[0.16em] text-slate-400">Guardrail focus</p>
+            <p className="mt-2 text-sm text-slate-200">Rate limits, overlay key secrecy, and queue latency control.</p>
+          </div>
         </div>
       </section>
 

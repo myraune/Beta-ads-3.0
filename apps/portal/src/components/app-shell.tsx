@@ -22,7 +22,7 @@ export function AppShell({ role, navItems, activePath, topbar, sidebarFooter, ri
         <AppTopbar role={role} {...topbar} />
         <div className={`beta-app-content ${rightRail ? "beta-app-content-with-rail" : ""}`}>
           <section className="space-y-4">{children}</section>
-          {rightRail ? <aside className="space-y-4">{rightRail}</aside> : null}
+          {rightRail ? <aside className="beta-app-rail space-y-4">{rightRail}</aside> : null}
         </div>
       </div>
     </main>
